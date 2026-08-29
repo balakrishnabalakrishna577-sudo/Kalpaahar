@@ -1,4 +1,4 @@
-﻿from django.contrib import admin
+from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -15,14 +15,26 @@ admin.site.index_title = "Dashboard"
 def serve_frontend(request):
     index_path = os.path.join(settings.FRONTEND_DIR, "index.html")
     if os.path.exists(index_path):
-        return FileResponse(open(index_path, "rb"), content_type="text/html")
+        response = FileResponse(open(index_path, "rb"), content_type="text/html; charset=utf-8")
+        # Never cache index.html - always serve fresh JS fixes
+        response["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response["Pragma"]        = "no-cache"
+        response["Expires"]       = "0"
+        return response
     return HttpResponse("<h1>index.html not found</h1>", status=404)
 
 
 def serve_frontend_file(request, filename):
-    file_path = os.path.join(settings.FRONTEND_DIR, filename)
-    if os.path.exists(file_path) and os.path.isfile(file_path):
-        return FileResponse(open(file_path, "rb"))
+    # Security: prevent path traversal
+    safe_path = os.path.normpath(os.path.join(settings.FRONTEND_DIR, filename))
+    if not safe_path.startswith(str(settings.FRONTEND_DIR)):
+        from django.http import Http404
+        raise Http404
+    if os.path.exists(safe_path) and os.path.isfile(safe_path):
+        response = FileResponse(open(safe_path, "rb"))
+        # Cache static assets (images, PDFs) for 1 hour
+        response["Cache-Control"] = "public, max-age=3600"
+        return response
     from django.http import Http404
     raise Http404
 
