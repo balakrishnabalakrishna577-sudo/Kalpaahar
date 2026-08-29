@@ -27,7 +27,7 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Custom domain
-ALLOWED_HOSTS += ["kalpaahar.in", "www.kalpaahar.in"]
+ALLOWED_HOSTS += ["kalpaahar.in", "www.kalpaahar.in", "kalpaahar-e62e.onrender.com"]
 
 # ─── Razorpay ─────────────────────────────────────────────────────────────────
 RAZORPAY_KEY_ID         = env("RAZORPAY_KEY_ID")
@@ -142,6 +142,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOWED_ORIGINS = [
     "https://kalpaahar.in",
     "https://www.kalpaahar.in",
+    "https://kalpaahar-e62e.onrender.com",
 ]
 CORS_ALLOW_ALL_ORIGINS = DEBUG   # True only in development
 
@@ -159,6 +160,7 @@ if not DEBUG:
 CSRF_TRUSTED_ORIGINS = [
     "https://kalpaahar.in",
     "https://www.kalpaahar.in",
+    "https://kalpaahar-e62e.onrender.com",
     "https://*.onrender.com",
 ]
 
