@@ -3308,21 +3308,17 @@ function showStep(step){
     currentTitle = title || 'High Protein Breakfast';
     currentPrice = Number(price) || 299;
     currentEbookId = getEbookId(currentTitle);
-var info = EBOOK_INFO[currentEbookId];
-if (info) {
-  document.getElementById('coPayInside').innerHTML =
-    info.inside.map(function(item) {
-      return '<li>' + item + '</li>';
-    }).join('');
-  document.getElementById('coPayWho').innerHTML =
-    info.who.map(function(item) {
-      return '<li>' + item + '</li>';
-    }).join('');
-  document.getElementById('coPayBenefits').innerHTML =
-    info.benefits.map(function(item) {
-      return '<li>' + item + '</li>';
-    }).join('');
-}
+try {
+  if (typeof EBOOK_INFO !== 'undefined' && EBOOK_INFO[currentEbookId]) {
+    var info = EBOOK_INFO[currentEbookId];
+    var el1 = document.getElementById('coPayInside');
+    var el2 = document.getElementById('coPayWho');
+    var el3 = document.getElementById('coPayBenefits');
+    if (el1 && info.inside)   el1.innerHTML = info.inside.map(function(i){ return '<li>'+i+'</li>'; }).join('');
+    if (el2 && info.who)      el2.innerHTML = info.who.map(function(i){ return '<li>'+i+'</li>'; }).join('');
+    if (el3 && info.benefits) el3.innerHTML = info.benefits.map(function(i){ return '<li>'+i+'</li>'; }).join('');
+  }
+} catch(e) {}
     document.getElementById('coTitle').textContent = currentTitle;
     document.getElementById('coPrice').textContent = currentPrice;
     document.getElementById('coPayTitle').textContent = currentTitle;
