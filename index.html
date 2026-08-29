@@ -3232,7 +3232,7 @@ function showMain(){
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
 /* ============ EBOOK CHECKOUT MODAL ============ */
-(function(){
+document.addEventListener('DOMContentLoaded', function(){
   /* Point this at your deployed backend from the /backend folder.
      Local testing default shown below &#8212; change before going live,
      e.g. 'https://api.kalpaahar.com' */
@@ -3590,7 +3590,7 @@ if (info) {
         showPayError(err.message || 'Could not start payment. Please try again.');
       });
   };
-})();
+});
 </script>
 <script>
 var SUPPORT_IMAGES = {
