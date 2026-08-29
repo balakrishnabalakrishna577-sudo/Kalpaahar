@@ -705,7 +705,7 @@ function showMain(){
 (function () {
 
   /* Point this at your deployed backend */
-var CHECKOUT_API_BASE = "http://127.0.0.1:8000";
+var CHECKOUT_API_BASE = "";
 
 var CHECKOUT_ENDPOINT = "https://formsubmit.co/ajax/kalpaahar.wellness@gmail.com";
 
